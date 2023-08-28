@@ -1,0 +1,1 @@
+* For some reason, the phone side edges on the browser look better than on CodePen, can anyone tell me why?
