@@ -1,0 +1,203 @@
+.container {
+    width: 500px;
+    height: 600px;
+    border: 1px solid black;
+    border-radius: 3px;
+    margin: auto;
+    position: relative;
+    /*background-color: black;*/
+    overflow: hidden;
+    filter: sepia(0.14);
+}
+
+.sky {
+    width:113%;
+    height:220px;
+    /*border: solid 5px #403e31;
+    border-bottom: none;*/
+    /*border-color: transparent transparent transparent transparent;*//*#403e31*/
+    border-radius: 70%/30px 30px 0px 0px;
+    position: absolute;
+    left: -50px;
+    z-index: 10;
+    transform: rotate(180deg);
+
+    background: linear-gradient(to top, #485357, #f0cc98);
+    filter: blur(1.3px);
+}
+
+.sun-ray {
+    height: 7px;
+    position: absolute;
+    z-index: 11;
+}
+.sun-ray-right {
+    width: 146px;
+    top: 131px;
+    left: 357px;
+    background: linear-gradient(0.25turn, #fefefe, transparent);
+    filter: drop-shadow(0px 0px 30px #fdfbdb) blur(2px);
+    transform: rotate(-5deg);
+}
+.sun-ray-left {
+    width: 270px;
+    top: 140px;
+    left: 0px;
+    background: linear-gradient(0.75turn, #fefefe, transparent);
+    filter: drop-shadow(0px 0px 30px #fdfbdb) blur(2px);
+}
+
+.sun {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: 87px;
+    right: 135px;
+    z-index: 11;
+    background: #fefefe;
+    filter: drop-shadow(0px 0px 30px #fdfbdb) blur(10px);/*blur(2px)*/
+}
+
+.sun-rays {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    position: absolute;
+    top: 76px;
+    right: 124px;
+    z-index: 11;
+    background: radial-gradient(#fefefe, transparent);
+    filter: blur(8px);
+    display: none;
+}
+
+.sea-container {
+    width: 571px;
+    height: 272px;
+    position: absolute;
+    top: 81px;
+    left: -97px;
+    z-index: 5;
+    /*background: #485357;
+    background: linear-gradient(#eab676, #485357 70%);*/
+    background: linear-gradient(217deg, #485357, rgba(255,0,0,0) 80.71%),
+                linear-gradient(127deg, #eab676, rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, #485357, rgba(0,0,255,0) 80.71%);
+    transform: rotateZ(154deg);
+    filter: blur(1.3px);
+}
+
+/*.far-wave {
+    width: 0px;
+    height: 0px;
+    border: 150px solid transparent;
+    border-top: 14px solid #605343;
+    border-right: 70px solid #1b1714;
+    border-bottom: 0px;
+    position: absolute;
+    bottom: 145px;
+    right: 80px;
+    transform: rotate(23deg);
+}*/
+
+.sea-edge-container {
+    width: 571px;
+    height: 272px;
+    position: relative;
+    top: 81px;
+    left: -97px;
+    background: linear-gradient(217deg, #485357, rgba(255,0,0,0) 80.71%),
+                linear-gradient(127deg, #eab676, rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, #485357, rgba(0,0,255,0) 80.71%);
+    transform: rotateZ(154deg);
+}
+
+.sea-edge-container .overlay{
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(217deg, #485357, rgba(255,0,0,0) 80.71%),
+                linear-gradient(127deg, #eab676, rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, #485357, rgba(0,0,255,0) 80.71%);
+}
+
+.sea-edge-container svg {
+    filter: blur(2px);
+}
+
+.sea-edge {
+    position: absolute;
+    z-index: -1;
+}
+
+.sea-edge-top {
+    top: -293px;
+    transform: rotateZ(228deg) scale(0.3);
+    translate: -178px;
+}
+
+.sea-edge-middle-1 {
+    top: -300px;
+    transform: rotateZ(228deg) scale(0.3);
+    translate: -22px;
+}
+
+/*.sea-edge-middle-2 {
+    top: -290px;
+    transform: rotateZ(228deg) scale(0.3);
+    translate: 96px;
+}*/
+
+.sea-edge-bottom {
+    top: -305px;
+    transform: rotateZ(228deg) scale(0.3);
+    translate: 180px;
+}
+
+.sun-sea-line {
+    width: 50px;
+    height: 77px;
+    position: absolute;
+    top: 217px;
+    left: 290px;
+    z-index: 9;
+    filter: blur(8px);
+}
+
+.sun-sea-line-right {
+    /*left: 300px;*/
+    transform: skewX(13deg);
+    background: linear-gradient(164deg, #fefefe, rgba(255,0,0,0) 70.71%),
+                linear-gradient(122deg, #fefefe, rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, transparent, rgba(0,0,255,0) 70.71%)
+}
+
+.sun-sea-line-left {
+    /*left: 290px;*/
+    transform: skewX(-13deg);
+    background: linear-gradient(217deg, #fefefe, rgba(255,0,0,0) 70.71%),
+                linear-gradient(240deg, #fefefe, rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, transparent, rgba(0,0,255,0) 70.71%);
+}
+
+.sand-container {
+    width: 100%;
+    height: 378px;
+    background: linear-gradient(to bottom right, #0c0b07, #3f2415);
+    background: linear-gradient(217deg, #342112, rgba(255,0,0,0) 50.71%),
+                linear-gradient(127deg, #0c0b07, rgba(0,255,0,0) 70.71%),
+                linear-gradient(336deg, #6a4125, #6a4125 70.71%);
+    margin-top: -50px;
+    position: relative;
+    z-index: -5;
+}
+
+.wet-sand {
+    position: absolute;
+    top: -326px;
+    transform: rotateZ(220deg) scale(0.9);
+    transform: rotate(130deg) scaleX(-1);
+    translate: -27px;
+    z-index: -1;
+    /*filter: blur(6px);*/
+}

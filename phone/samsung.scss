@@ -1,0 +1,603 @@
+:root {
+    --width: 300px;
+    --height: 600px;
+    --phone-padding: 5px;
+    --depth: 15px;
+    --width-distance: calc((var(--width) / 2) + var(--phone-padding));
+    --height-distance: calc((var(--height) / 2) + var(--phone-padding));
+    --width-padding: calc((var(--depth) / 2) + var(--phone-padding));
+    --height-padding: calc((var(--height) / 2) + var(--phone-padding));
+    --width-negative-padding: calc(var(--width-padding) * -1);
+    --half-phone-padding: calc(var(--phone-padding) / 2);
+    /*--height-negative-padding: calc(var(--height-padding) * -1);*/
+    --top-padding: calc(var(--height-padding) - (var(--height) / 2) + var(--half-phone-padding));
+    --bottom-padding: calc(var(--height-padding) + (var(--height) / 2) - var(--half-phone-padding));
+    --right-padding: calc(var(--width-negative-padding) - var(--width) + var(--phone-padding) - 3px);/* + 3px*/
+    --left-padding: calc(var(--width-negative-padding));/* - 8px*/
+    --white-color: #f1eeec;
+
+    --black-bezel: #000;
+    --gray-cover: #ccc;
+    --edge-height: 101%;
+    --edge-top: -3px;
+    --height-constant: 0.005%;
+    --top-constant: 0.25px;
+}
+
+@function calculate-back-edge-details($back-edge-start, $initial-value, $constant, $i, $operation, $is-height) {
+    @if ($i >= 9 and $i <= 13 and $is-height == 1) {
+        @return #{calc($initial-value + ($operation * $constant * ($i - $back-edge-start) + 0.5px))};
+    }
+    @else {
+        @return #{calc($initial-value + ($operation * $constant * ($i - $back-edge-start)))};
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /*height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;*/
+    background: #1a1919;
+}
+.container {
+    /*height: 30px;*/
+    height: 5vh;
+    /*width: 30vw;
+    width: 100vw;*/
+    /*border: 1px solid #000;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.phone {
+    width: var(--width);
+    /*height: var(--height);*/
+    perspective: 10000px;
+    transform-style: preserve-3d;
+    animation: rotate 15s linear infinite;
+    /*transform: rotateY(180deg);*/
+    /*transform: rotateX(180deg);*/
+    will-change: transform;
+    transform-origin: var(--width-distance) var(--height-distance);
+    position: relative;
+    animation-play-state: running;
+
+    &:active {
+        animation-play-state: paused;
+    }
+}
+/*.wrapper {
+  animation: rotate 15s linear infinite;
+}*/
+@keyframes rotate {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+.phone > div {
+    position: absolute;
+    /*border-radius: 5px;*/
+}
+
+  .phone__front,
+  .phone__back,
+  .phone__left,
+  .phone__right,
+  .phone__top,
+  .phone__shadow {
+    position: absolute;
+    width: var(--width);
+    height: var(--height);
+    background: #ccc;
+    /*border: 1px solid #999;*/
+  }
+
+.phone__front {
+  /*background: red;*/
+  background: #2f2e33;
+  border-radius: 2px;
+  transform: translateZ(var(--width-padding));
+}
+.phone__back {
+  --width-factor: 1.019;
+  --height-factor: 1.01;
+  width: calc(var(--width) * var(--width-factor));
+  height: calc(var(--height) * var(--height-factor));
+  /*background: darkred;*/
+  background: var(--white-color);
+  border-radius: 5px;
+  transform: translateZ(var(--width-negative-padding));
+  transform: translateZ(-6px) translateX(-3px) translateY(-2px);
+}
+.phone__left {
+  width: var(--depth);
+  /*width: 18px;*/
+  /*background: blue;*/
+  transform: rotateY(90deg) translateZ(var(--left-padding));
+  display: none;
+}
+.phone__right {
+  width: var(--depth);
+  /*width: 18px;*/
+  /*background: yellow;*/
+  transform: rotateY(-90deg) translateZ(var(--right-padding));
+  display: none;
+}
+/*.phone__top {
+  height: var(--depth);
+  background: green;
+  transform: rotateX(90deg) translateZ(var(--top-padding));
+}*/
+.phone__shadow {
+  height: var(--depth);
+  background: #b7b3b3;
+  transform: rotateX(-90deg) translateZ(calc(var(--bottom-padding) + 8px));
+  filter: blur(10px);
+}
+
+.phone__container {
+    position: absolute;
+    /*left: 50%;
+    bottom: 100px;
+    width: 300px;*/
+    height: 100%;
+    height: var(--height);
+    //background:rgba(0,0,0,.3);
+    //transform-origin: bottom;
+    transform-style: preserve-3d;
+    //transform: rotateY(-47deg);
+    //transform: perspective(100px);
+
+    .edge {
+        position: absolute;
+        /*bottom: 75px;
+        left: 75px;*/
+        top: var(--edge-top);
+        width: 3px;
+        height: var(--edge-height);
+        /*border-left: solid 20px #ccc;
+        border-right: solid 20px #ccc;
+        border-top: solid 5px #ccc;
+        border-bottom: solid 5px #ccc;
+        border-radius: 100% 100% 100% 100% / 20% 20% 20% 20%;*/
+        /*background: rgb(0, 27, 144);*/
+        /*background: radial-gradient(
+            circle at 220% 50%,
+            rgba(0, 27, 144, 0) 0%,
+            rgba(2, 0, 130, 0) 60%,
+            rgba(31, 22, 0, 1) 60%,
+            rgba(74, 53, 0, 1) 70%,
+            rgba(74, 53, 0, 0) 70%,
+            rgba(75, 54, 0, 0) 100%
+        ),
+        radial-gradient(
+            circle at -120% 50%,
+            rgba(0, 27, 144, 0) 0%,
+            rgba(2, 0, 130, 0) 60%,
+            rgba(74, 53, 0, 1) 60%,
+            rgba(42, 30, 10, 1) 70%,
+            rgba(74, 53, 0, 0) 70%,
+            rgba(31, 23, 0, 1) 71%,
+            rgba(100, 75, 0, 0) 71%,
+            rgba(100, 75, 0, 0) 100%
+        );*/
+        background: var(--gray-cover);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: 100% 100%;
+    }
+}
+.phone__back-left-container {
+    //transform: translateX(2px);
+    transform: translateX(1.9px) translateZ(-4.5px);
+
+    .back-left-edge {
+        //background: purple;
+        //border-radius: 10px 0 0 10px;
+        //border-radius: 10px 0 0 10px;
+        border-radius: 10px;
+
+        $back-left-start: 14;
+        @for $i from $back-left-start through 20 {
+            $nth: calc($i - $back-left-start + 1);
+            &:nth-child(#{$nth}) {
+                //transform: translate3d(#{calc(var(--width) + (0.5px * $i))}, 0, #{(1px * -1 * $i - 1)});
+                transform: rotateY(#{4.5deg * $i})
+                        translate3d(#{(0.25px * -1 * $i - 1)},
+                                    0,
+                                    #{calc((0.5px * -1 * $i))}
+                                    ) /*translateZ(var(--right-padding))*/;
+
+                $back-edge-start: 8;
+                @if $i >= $back-edge-start {
+                    /*height: #{calc(var(--edge-height) - (0.25% * ($i - $back-edge-start)))};
+                    top: #{calc(var(--edge-top) + (0.25px * ($i - $back-edge-start)))};*/
+                    height: calculate-back-edge-details($back-edge-start, var(--edge-height), var(--height-constant), $i, -1, 1);
+                    top: calculate-back-edge-details($back-edge-start, var(--edge-top), var(--top-constant), $i, 1, 0);
+                }
+            }
+        }
+    }
+}
+.phone__front-left-container {
+    //transform: translateX(2px);
+    transform: translateX(-3px) translateZ(3px);
+
+    .front-left-edge {
+        //background: darkcyan;
+        width: 5px;
+        background: linear-gradient(var(--gray-cover) 0%, var(--gray-cover) 1.4%, var(--black-bezel) 1.4%, var(--black-bezel) 98.6%, var(--gray-cover) 98.6%, var(--gray-cover) 100%);
+        background: var(--black-bezel);
+        border-radius: 10px 0 0 10px;
+
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+                transform: rotateY(#{4.5deg * $i})
+                        translate3d(#{(0.25px * -1 * $i - 1)},
+                                    0,
+                                    #{calc((0.5px * $i))});
+
+                //@if $i < 20 {
+                    //background: #000;
+                //}
+            }
+        }
+    }
+}
+.phone__back-right-container {
+    //transform: translateX(-0.5px);
+    transform: translateX(calc(var(--width) - 3.5px)) translateZ(-4px);
+
+    .back-right-edge {
+        //background: darkgreen;
+        //border-radius: 0 10px 10px 0;
+        //border-radius: 10px 0 0 10px;
+        border-radius: 10px;
+
+        $back-right-start: 13;
+        @for $i from $back-right-start through 20 {
+            $nth: calc($i - $back-right-start + 1);
+            &:nth-child(#{$nth}) {
+                /*@if $i > 12 {
+                    transform: rotateY(#{4.5deg * -1 * $i})
+                            translate3d(#{calc((0.25px * $i))},
+                                        #{0.2px * $i},
+                                        #{calc((0.5px * -1 * $i))});
+                }
+                @else {*/
+                    transform: rotateY(#{4.5deg * -1 * $i})
+                            translate3d(#{calc((0.25px * $i))},
+                                        0,
+                                        #{calc((0.5px * -1 * $i))});
+                //}
+                $back-edge-start: 8;
+                @if $i >= $back-edge-start {
+                    height: calculate-back-edge-details($back-edge-start, var(--edge-height), var(--height-constant), $i, -1, 1);
+                    top: calculate-back-edge-details($back-edge-start, var(--edge-top), var(--top-constant), $i, 1, 0);
+                }
+            }
+        }
+    }
+}
+.phone__front-right-container {
+    //transform: translateX(-0.5px);
+    transform: translateX(calc(var(--width) - 2px)) translateZ(3px);
+
+    .front-right-edge {
+        //background: darkorange;
+        width: 5px;
+        background: linear-gradient(var(--gray-cover) 0%, var(--gray-cover) 1.4%, var(--black-bezel) 1.4%, var(--black-bezel) 98.6%, var(--gray-cover) 98.6%, var(--gray-cover) 100%);
+        background: var(--black-bezel);
+        border-radius: 0 10px 10px 0;
+
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+                transform: rotateY(#{(4.5deg * -1 * $i)})
+                        translate3d(calc(#{(0.25px * $i)}),
+                                    0,
+                                    #{calc((0.5px * $i))});
+
+                //@if $i < 20 {
+                    //background: #000000;
+                //}
+            }
+        }
+    }
+}
+.phone__top-right-container, .phone__top-left-container {
+    height: 11px;
+    //top: -4px;
+    .top-right-edge, .top-left-edge {
+        width: 3px;
+        border-radius: 10px 0 0 10px;
+        filter: blur(0.5px);
+
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+                transform: rotateY(#{(4.5deg * -1 * $i)})
+                        translate3d(calc(#{(0.25px * $i)}),
+                                    0,
+                                    #{calc((0.5px * $i))});
+            }
+        }
+    }
+}
+.phone__top-right-container {
+    transform: rotateX(90deg) translateY(3px);
+    left: var(--width);
+
+    .top-right-edge {
+        background: linear-gradient(var(--gray-cover) 0%, var(--gray-cover) 70%, var(--black-bezel) 70%, var(--black-bezel) 100%);
+
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+                transform: rotateY(#{(4.5deg * -1 * $i)})
+                        translate3d(calc(#{(0.25px * $i)}),
+                                    0,
+                                    #{calc((0.5px * $i))});
+            }
+        }
+    }
+}
+.phone__top-left-container {
+    transform: rotateX(90deg) rotateZ(180deg) translateY(2px);
+
+    .top-left-edge {
+        background: linear-gradient(var(--black-bezel) 0%, var(--black-bezel) 30%,  var(--gray-cover) 30%, var(--gray-cover) 100%);
+
+    }
+}
+
+.phone__top-front-container, .phone__bottom-front-container {
+    height: calc(var(--width) - 5px);
+    //transform: rotateX(90deg) rotateZ(90deg) translateY(-58.5px) translateZ(60.1px) translateX(-3.1px);
+    transform: rotateX(90deg) rotateZ(90deg) translateY(calc(var(--width-distance) * -1 + 2px)) translateZ(calc(var(--width-distance) - 7px)) translateX(-3.1px);
+
+    .top-front-edge, .bottom-front-edge {
+        width: 1px;
+        background: var(--black-bezel);
+        border-radius: 10px;
+
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+                transform: rotateY(#{(4.5deg * $i)})
+                        translate3d(calc(#{(0.25px * $i)}),
+                                    0,
+                                    #{calc((0.5px * $i))});
+            }
+        }
+    }
+}
+.phone__top-back-container, .phone__bottom-back-container {
+    height: calc(var(--width) + 5px);
+    transform: rotateX(90deg) rotateZ(90deg) translateY(calc(var(--width-distance) * -1 + 6px)) translateZ(calc(var(--width-distance) - 6px)) translateX(1.9px);
+
+    $back-start: 12;
+    .top-back-edge, .bottom-back-edge {
+        width: 1px;
+        background: var(--gray-cover);
+        border-radius: 10px;
+
+        @for $i from $back-start through 20 {
+            $nth: calc($i - $back-start + 1);
+            &:nth-child(#{$nth}) {
+                transform: rotateY(#{(4.5deg * -1 * $i)})
+                        translate3d(calc(#{(0.25px * $i)}),
+                                    0,
+                                    #{calc((0.5px * $i))});
+            }
+        }
+    }
+}
+.phone__bottom-front-container, .phone__bottom-back-container {
+    transform: rotateX(90deg) rotateZ(90deg) translateY(calc(var(--width-distance) * -1 + 7px)) translateZ(calc(var(--height) * -1 + 150px)) translateX(4.6px);
+
+    .bottom-front-edge, .bottom-back-edge {
+        @for $i from 1 through 20 {
+            &:nth-child(#{$i}) {
+                transform: rotateY(#{(4.5deg * $i)})
+                        translate3d(calc(#{(0.25px * $i)}),
+                                    0,
+                                    #{calc((0.5px * -1 * $i))});
+            }
+        }
+    }
+}
+.phone__bottom-back-container {
+    transform: rotateX(90deg) rotateZ(-90deg) translateY(calc((var(--width-distance)) - 2px)) translateZ(calc(var(--height) * -1 + 152px)) translateX(6.6px);/*6.1*/
+
+    $back-start: 12;
+    .bottom-back-edge {
+        @for $i from $back-start through 20 {
+            $nth: calc($i - $back-start + 1);
+            &:nth-child(#{$nth}) {
+                transform: rotateY(#{(4.5deg * $i)})
+                        translate3d(calc(#{(0.25px * $i)}),
+                                    0,
+                                    #{calc((0.5px * -1 * $i))});
+            }
+        }
+    }
+}
+
+.selfie-camera {
+    $camera-dimentions: 15px;
+    width: $camera-dimentions;
+    height: $camera-dimentions;
+    background: #bfb4b4;
+    margin: auto;
+    margin-top: 5px;
+    border: 0.5px solid #aaa8a8;
+    border-radius: 50%;
+    opacity: 0.8;
+    position: relative;
+
+    &:before {
+        content: "";
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        border-radius: 50%;
+        background: radial-gradient(transparent 30%, #333 70%);
+        position: absolute;
+    }
+}
+
+$main-cameras-width: 110px;
+$main-cameras-height: 170px;
+.main-cameras-container, .main-cameras-container-shadow {
+    width: $main-cameras-width;
+    height: $main-cameras-height;
+    //border: 1px solid black;
+    background: var(--white-color);
+    border-radius: 12%;
+    top: 10px;
+    right: 8px;
+    transform: translateZ(-8px);
+
+    .main-cameras {
+        width: 98%;
+        height: 98%;
+        //border: 1px solid black;
+        //background: #251;
+        padding: 1px 2px 1px 1px;
+        position: absolute;
+        left: 1%;
+        top: 1%;
+        display: flex;
+        flex-direction: row-reverse;
+
+        .camera {
+            $camera-dimentions: 45px;
+            width: $camera-dimentions;
+            height: $camera-dimentions;
+            border-radius: 50%;
+            background: #000;
+        }
+
+        .camera:nth-child(1), .camera:nth-child(2), .camera:nth-child(3) {
+            border: 6px solid #000;
+            background: radial-gradient(#323232 15%, #000 16%, #000 20%, #323232 100%);
+
+            &:before {
+                content: "";
+                width: 100%;
+                height: 100%;
+                display: inline-block;
+                border-radius: 50%;
+                background: radial-gradient(rgba(255, 255, 255, 0.3) 30%, #000 50%);
+            }
+        }
+        .camera:nth-child(2), .camera:nth-child(3) {
+            background: radial-gradient(#323232 5%, #000 6%, #323232 99%);
+        }
+        .camera:nth-child(3)::before {
+            background: radial-gradient(rgba(255, 255, 255, 0.3) 35%, #000 20%);
+        }
+
+        .left-column, .right-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .left-column .camera {
+            border: 3px solid #8b8989;
+        }
+
+        .camera.small {
+            $camera-dimentions: 30px;
+            width: $camera-dimentions;
+            height: $camera-dimentions;
+        }
+
+        .camera.small:nth-child(1), .camera.small:nth-child(2) {
+            border: 6px solid #000;
+
+            &:before {
+                content: "";
+                width: 100%;
+                height: 100%;
+                display: inline-block;
+                border-radius: 50%;
+            }
+        }
+        .camera.small:nth-child(1) {
+            background: radial-gradient(#000 1%, #323232 99%);
+
+            &:before {
+                background: radial-gradient(rgba(255, 255, 255, 0.3) 40%, #333 60%);
+            }
+        }
+        .camera.small:nth-child(2) {
+            background: #fff;
+
+            &:before {
+                background: radial-gradient(rgb(241 243 98 / 50%) 40%, #333 60%);
+            }
+        }
+    }
+}
+.main-cameras-container-shadow {
+    transform: translateZ(-6px);
+    filter: drop-shadow(-5px 5px 4px #7b7672);
+}
+
+.main-cameras-h-edge, .main-cameras-v-edge, .camera-edge {
+    height: 2px;
+    background: var(--white-color);
+}
+.main-cameras-v-edge {
+    width: calc($main-cameras-height - 30px);
+}
+.main-cameras-right {
+    transform: rotateZ(90deg) rotateX(90deg) translate3d(93px, -7px, 222px);
+}
+.main-cameras-left {
+    transform: rotateZ(90deg) rotateX(90deg) translate3d(93px, -7px, 111px);
+}
+.main-cameras-h-edge {
+    width: calc($main-cameras-width - 20px);
+}
+.main-cameras-top {
+    transform: rotateX(90deg) translate3d(191px, -7px, -6px);
+    background: green;
+}
+.main-cameras-bottom {
+    transform: rotateX(90deg) translate3d(191px, -7px, -180px);
+}
+
+/*.camera-edge {
+    width: 5px;
+    background: blue;
+    position: absolute;
+}
+.main-cameras-top-right {
+    transform: translateX(388px) translateY(21px) translateZ(-9px) rotateZ(180deg) rotateX(0deg) rotateY(270deg);
+    //transform: translateZ(-8px);
+
+    .top-right-camera-edge {*/
+        @for $i from 1 through 10 {
+            /*&:nth-child(#{$i}) {
+                //width: (#{2px + $i});
+                transform:  rotateX(#{9deg * $i})
+                            translate3d(#{calc((1px * $i))},
+                            #{calc((1px * $i))},
+                            0);
+                            //translateZ(#{calc((0.2px * $i))});
+                //transform: translateX(388px) translateY(7px) translateZ(-8px)
+                    //rotateY(90deg) rotateX(90deg)
+                    //rotateZ(#{9deg * $i}) translate3d(0,
+                                                    //0,
+                                                    //#{calc(-8px + (0.2px * $i))});
+            }*/
+        }
+    /*}
+}*/
