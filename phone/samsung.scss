@@ -68,7 +68,7 @@ body {
     position: relative;
     animation-play-state: running;
 
-    &:active {
+    &:active, &:hover {
         animation-play-state: paused;
     }
 }
@@ -204,7 +204,8 @@ body {
 
         $back-left-start: 14;
         @for $i from $back-left-start through 20 {
-            $nth: calc($i - $back-left-start + 1);
+            //$nth: calc($i - $back-left-start + 1);
+            $nth: #{$i - $back-left-start + 1};
             &:nth-child(#{$nth}) {
                 //transform: translate3d(#{calc(var(--width) + (0.5px * $i))}, 0, #{(1px * -1 * $i - 1)});
                 transform: rotateY(#{4.5deg * $i})
@@ -261,7 +262,8 @@ body {
 
         $back-right-start: 13;
         @for $i from $back-right-start through 20 {
-            $nth: calc($i - $back-right-start + 1);
+            //$nth: calc($i - $back-right-start + 1);
+            $nth: #{$i - $back-right-start + 1};
             &:nth-child(#{$nth}) {
                 /*@if $i > 12 {
                     transform: rotateY(#{4.5deg * -1 * $i})
@@ -384,7 +386,8 @@ body {
         border-radius: 10px;
 
         @for $i from $back-start through 20 {
-            $nth: calc($i - $back-start + 1);
+            //$nth: calc($i - $back-start + 1);
+            $nth: #{$i - $back-start + 1};
             &:nth-child(#{$nth}) {
                 transform: rotateY(#{(4.5deg * -1 * $i)})
                         translate3d(calc(#{(0.25px * $i)}),
@@ -414,7 +417,8 @@ body {
     $back-start: 12;
     .bottom-back-edge {
         @for $i from $back-start through 20 {
-            $nth: calc($i - $back-start + 1);
+            //$nth: calc($i - $back-start + 1);
+            $nth: #{$i - $back-start + 1};
             &:nth-child(#{$nth}) {
                 transform: rotateY(#{(4.5deg * $i)})
                         translate3d(calc(#{(0.25px * $i)}),
