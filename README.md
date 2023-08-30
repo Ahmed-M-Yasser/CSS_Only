@@ -6,5 +6,7 @@ I saw a lot of mind-blowing CSS-only art on the internet, so I decided to give i
 * Phone CodePen link https://codepen.io/Ahmed-M-Yasser/pen/GRPowLE
 
 *The Beach was finished on 20-02-2023*
+
 *The Watch was finished on 31-03-2023*
+
 *The Phone was finished on 10-07-2023*
