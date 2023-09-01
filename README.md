@@ -1,4 +1,4 @@
-I saw a lot of mind-blowing CSS-only art on the internet, so I decided to give it a try. After trying it myself, I advise everyone who loves CSS to try it. It will make you use & discover awesome CSS properties. Also you can be free -for once- from the browser compatibility chains.
+These are 3 separate CSS-Only projects bundled together (Beach, Watch & Phone).
 
 * Hover or click the phone to stop rotating.
 * Beach CodePen link https://codepen.io/Ahmed-M-Yasser/pen/WNLrYmJ
